@@ -229,13 +229,14 @@ public class JMXTransport implements Transport {
             try {
                 MBeanServerConnection connection = getConnection(server);
                 if (connection != null) {
-                    Map<String, Object> event = createEvent();
+                    Map<String, Object> data = Maps.newHashMap();
                     for (Query query : queries) {
                         HashMultimap<ObjectName, Result> results = queryProcessor.processQuery(connection, query);
                         for (Map.Entry<ObjectName, Result> entry : results.entries()) {
-                            processResult(event, entry);
+                            processResult(data, entry);
                         }
                     }
+                    Map<String, Object> event = createEvent(data);
                     publishToGLServer(event);
                 } else {
                     LOGGER.debug("Cannot get connection for server " + server);
@@ -253,7 +254,18 @@ public class JMXTransport implements Transport {
             eventData.put("host", server.getHost());
             eventData.put("_label", label);
             //graylog needs a short_message as part of every event
-            eventData.put("short_message", "JMX");
+            eventData.put("short_message", "[JMX][" + label + "][" + queryConfig.getType() + "] event data");
+            return eventData;
+        }
+
+        private Map<String, Object> createEvent(Map<String, Object> data) {
+            Map<String, Object> eventData = Maps.newHashMap();
+            eventData.put("version", "1.1");
+            eventData.put("_object", queryConfig.getType());
+            eventData.put("host", server.getHost());
+            eventData.put("_label", label);
+            eventData.putAll(data);
+            eventData.put("short_message", "[JMX][" + label + "][" + queryConfig.getType() + "] event data");
             return eventData;
         }
 
@@ -382,7 +394,7 @@ public class JMXTransport implements Transport {
             cr.addField(new TextField(CK_CONFIG_LABEL,
                     "Label",
                     "",
-                    "Label to identify this HTTP monitor"));
+                    "Label to identify this monitor"));
 
             Map<String, String> monitorTypes = new HashMap<>();
             monitorTypes.put("jvm.json", "JVM");

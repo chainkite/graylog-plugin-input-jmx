@@ -2,6 +2,66 @@
   "type": "tomcat",
   "queries": [
     {
+      "object": "java.lang:type=Memory",
+      "attributes": [
+        {
+          "name": "HeapMemoryUsage",
+          "key": "used",
+          "label": "jvm.mem.heap.used"
+        },
+        {
+          "name": "HeapMemoryUsage",
+          "key": "committed",
+          "label": "jvm.mem.heap.committed"
+        },
+        {
+          "name": "NonHeapMemoryUsage",
+          "key": "used",
+          "label": "jvm.mem.nonheap.used"
+        }
+      ]
+    },
+    {
+      "object": "java.lang:type=Threading",
+      "attributes": [
+        {
+          "name": "ThreadCount",
+          "label": "jvm.threads.count"
+        }
+      ]
+    },
+    {
+      "object": "java.lang:type=ClassLoading",
+      "attributes": [
+        {
+          "name": "LoadedClassCount",
+          "label": "jvm.classes.loadedCount"
+        }
+      ]
+    },
+    {
+      "object": "java.lang:type=GarbageCollector,name=*",
+      "attributes": [
+        {
+          "name": "CollectionCount",
+          "label": "jvm.gc.{name}.count"
+        }
+      ]
+    },
+    {
+      "object": "java.lang:type=OperatingSystem",
+      "attributes": [
+        {
+          "name": "SystemLoadAverage",
+          "label": "jvm.os.systemLoadAverage"
+        },
+        {
+          "name": "ProcessCpuLoad",
+          "label": "jvm.os.processCpuLoad"
+        }
+      ]
+    },
+    {
       "object": "Catalina:type=ThreadPool,name=*",
       "attributes": [
         {
