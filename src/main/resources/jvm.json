@@ -18,6 +18,31 @@
           "name": "NonHeapMemoryUsage",
           "key": "used",
           "label": "jvm.mem.nonheap.used"
+        },
+        {
+          "name": "NonHeapMemoryUsage",
+          "key": "committed",
+          "label": "jvm.mem.nonheap.committed"
+        }
+      ]
+    },
+    {
+      "object": "java.lang:type=MemoryPool,name=*",
+      "attributes": [
+        {
+          "name": "Usage",
+          "key": "committed",
+          "label": "jvm.mem.heap.{name}.committed"
+        },
+        {
+          "name": "Usage",
+          "key": "used",
+          "label": "jvm.mem.heap.{name}.used"
+        },
+        {
+          "name": "Usage",
+          "key": "max",
+          "label": "jvm.mem.heap.{name}.max"
         }
       ]
     },
@@ -27,6 +52,10 @@
         {
           "name": "ThreadCount",
           "label": "jvm.threads.count"
+        },
+        {
+          "name": "PeakThreadCount",
+          "label": "jvm.threads.peakCount"
         }
       ]
     },
@@ -45,6 +74,10 @@
         {
           "name": "CollectionCount",
           "label": "jvm.gc.{name}.count"
+        },
+        {
+          "name": "CollectionTime",
+          "label": "jvm.gc.{name}.time"
         }
       ]
     },
